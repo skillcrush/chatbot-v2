@@ -19,3 +19,29 @@ def get_api_chat_response_message(model, messages):
     return response_content
 
 model = "gpt-3.5-turbo"
+
+chat_history = []
+
+user_input = ""
+
+while True:
+    if (user_input == ""):
+        user_input = input("Chatbot: Hello there, I'm your helpful chatbot! What's your name? ")
+    else:
+        user_input = input("You: ")
+    if user_input.lower() == "exit":
+        break
+	
+    chat_history.append({
+        "role": "user",
+        "content": user_input
+    })
+
+    response = get_api_chat_response_message(model, chat_history)
+
+    print("Chatbot: ", response)
+
+    chat_history.append({
+        "role": "assistant",
+        "content": response
+    })
