@@ -42,7 +42,7 @@ while True:
     
     # encode the user input
     # user_input_encoded = encoding.encode(user_input)
-    #print the encoded user input
+    # print the encoded user input
     # print(user_input_encoded)
     
     # update the token_count to be the length of the user input
