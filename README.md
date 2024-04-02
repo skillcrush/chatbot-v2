@@ -28,6 +28,11 @@ Install the OpenAI API library by running (in both a Mac and Windows):
 You'll see an openai-env folder has been added to the directory with all of the installed dependencies.
 
 <br>
+Install the tiktoken library by running (in both a Mac and Windows):
+
+`pip install tiktoken`
+
+<br>
 To run your code, in the command line run (change the file name if necessary):
 
 On a Mac:
