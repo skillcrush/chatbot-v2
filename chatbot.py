@@ -1,5 +1,11 @@
 from openai import OpenAI
 import tiktoken
+import logging
+import datetime
+
+log = logging.getLogger("chatbot_token_count")
+
+logging.basicConfig(filename = "chatbot_token_count.log", level = logging.INFO)
 
 client = OpenAI()
 
@@ -13,20 +19,24 @@ def get_api_chat_response_message(model, messages):
         messages = messages
     )
 
-    # extract the response text
-    response_content = api_response.choices[0].message.content
+    # return the response
+    return api_response
 
-    # return the response text
-    return response_content
+# extract and return the response text
+def get_response_message(response):
+    return response.choices[0].message.content
+
+# extract and return the total number of tokens
+def get_response_total_tokens(response):
+    return response.usage.total_tokens
 
 model = "gpt-3.5-turbo"
 
 encoding = tiktoken.encoding_for_model(model)
 
-# print the encoding variable
-# print(encoding)
-
 token_input_limit = 12289
+
+total_token_count = 0
 
 chat_history = []
 
@@ -38,17 +48,10 @@ while True:
     else:
         user_input = input("You: ")
     if user_input.lower() == "exit":
+        log.info("\nDate: " + str(datetime.datetime.now()) + "\nTotal tokens: " + str(total_token_count) + "\n\n")
         break
-    
-    # encode the user input
-    # user_input_encoded = encoding.encode(user_input)
-    # print the encoded user input
-    # print(user_input_encoded)
-    
-    # update the token_count to be the length of the user input
+	
     token_count = len(encoding.encode(user_input))
-    # print the token_count
-    # print(token_count)
     
     if (token_count > token_input_limit):
         print("Your prompt is too long. Please try again.")
@@ -60,10 +63,14 @@ while True:
     })
     
     response = get_api_chat_response_message(model, chat_history)
+    response_message = get_response_message(response)
 
-    print("Chatbot: ", response)
+    response_total_tokens = get_response_total_tokens(response)
+    total_token_count += response_total_tokens
+
+    print("Chatbot: ", response_message)
 
     chat_history.append({
         "role": "assistant",
-        "content": response
+        "content": response_message
     })
