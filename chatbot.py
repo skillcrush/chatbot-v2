@@ -38,7 +38,7 @@ while True:
     else:
         user_input = input("You: ")
     if user_input.lower() == "exit":
-        break
+        exit()
     
     # encode the user input
     # user_input_encoded = encoding.encode(user_input)
