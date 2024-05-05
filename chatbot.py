@@ -30,7 +30,7 @@ while True:
     else:
         user_input = input("You: ")
     if user_input.lower() == "exit":
-        break
+        exit()
 	
     chat_history.append({
         "role": "user",
