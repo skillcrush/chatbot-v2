@@ -49,7 +49,7 @@ while True:
         user_input = input("You: ")
     if user_input.lower() == "exit":
         log.info("\nDate: " + str(datetime.datetime.now()) + "\nTotal tokens: " + str(total_token_count) + "\n\n")
-        break
+        exit()
 	
     token_count = len(encoding.encode(user_input))
     
